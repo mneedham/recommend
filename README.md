@@ -9,18 +9,16 @@ sudo apt-get install -yq oracle-java7-installer scala git python-virtualenv pyth
 ```
 
 ```bash
-curl -O http://apache.cs.utah.edu/spark/spark-1.3.0/spark-1.3.0.tgz
-tar xvf spark-1.3.0.tgz
-cd spark-1.3.0/
-build/sbt assembly
-```
-
-```bash
 virtualenv spark_venv
 source spark_venv/bin/activate
 git clone https://github.com/marklit/recommend.git
 cd recommend
 pip install -r requirements.txt
+```
+
+```bash
+curl -O http://www.apache.org/dyn/closer.cgi/spark/spark-1.3.1/spark-1.3.1-bin-hadoop2.6.tgz
+tar xvf spark-1.3.1-bin-hadoop2.6.tgz
 ```
 
 ## Film ratings data
@@ -35,7 +33,7 @@ unzip -j ml-1m.zip "*.dat"
 ## Training
 
 ```bash
-$ ../bin/spark-submit recommend.py train ratings.dat
+$ ./spark-1.3.0-bin-hadoop1/bin/spark-submit recommend.py train ratings.dat
 ```
 
 ```
@@ -55,7 +53,7 @@ The best model was trained with:
 ```
 
 ```bash
-$ ../bin/spark-submit recommend.py train ratings.dat \
+$ ./spark-1.3.0-bin-hadoop1/bin/spark-submit recommend.py train ratings.dat \
     --ranks=8,9,10 --lambdas=0.31,0.32,0.33 --iterations=3
 ```
 
@@ -68,7 +66,7 @@ The best model was trained with:
 ```
 
 ```bash
-$ ../bin/spark-submit recommend.py train ratings.dat \
+$ ./spark-1.3.0-bin-hadoop1/bin/spark-submit recommend.py train ratings.dat \
     --ranks=5,10,15,20 --lambdas=0.33,0.5,0.8,0.9 --iterations=3,6,9
 ```
 
@@ -83,7 +81,7 @@ The best model was trained with:
 ## Recommending
 
 ```bash
-$ ../bin/spark-submit recommend.py recommend ratings.dat movies.dat
+$ ./spark-1.3.0-bin-hadoop1/bin/spark-submit recommend.py recommend ratings.dat movies.dat
 ```
 
 ```
@@ -101,7 +99,7 @@ Message in a Bottle (1999)
 ```
 
 ```bash
-$ ../bin/spark-submit recommend.py recommend ratings.dat movies.dat \
+$ ./spark-1.3.0-bin-hadoop1/bin/spark-submit recommend.py recommend ratings.dat movies.dat \
     --rank=15 --lambda=0.33 --iteration=3
 ```
 
